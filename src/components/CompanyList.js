@@ -1,40 +1,66 @@
 import React, { Component } from 'react'
-import CompanyCard from './CompanyCard';
-import { NavLink } from 'react-router-dom'; 
+// import CompanyCard from './CompanyCard';
+// import { NavLink } from 'react-router-dom'; 
 import PropTypes from "prop-types";
 import { Route, Switch } from 'react-router-dom';
+import { checkApiServer } from '../api';
+// REDUX CONNECT
+import { connect } from 'react-redux';
+// REDUX ACTIONS
+import { getCompanies } from '../actions/actionCreators';
+import CompanyCard from './CompanyCard';
 // import {faListUl, faTag} from '@fortawesome/free-solid-svg-icons';
 
 class CompanyList extends Component {
+  componentDidMount() {
+		// checking that we're connected to the backend
+		checkApiServer();
+		this.props.getCompanies();
+	}
   static propTypes = {
     match: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired
   };
   render() {
-    // const { location } = this.props;
-    const companyId = '37BMJDH00092';
     return (
       <div>
-        {/* <div>You are now at {location.pathname}</div> */}
-        <Switch>
-          <Route path={`/companies/:${companyId}`} component={CompanyCard} />
+        {this.props.companies.map((company) => {
+          return <Switch>
+          {/* <Route path={`/companies/:${company.id}`} component={CompanyCard} /> */}
+          <Route path={'/companies/:id'} component={CompanyCard} />
         </Switch>
-        {this.props.location.pathname === '/companies' ? 
-        <div><NavLink to={`/companies/:${companyId}`}><h2>Company Name</h2></NavLink>
-        <ul>
-          <li>Tag</li>
-          <li>Tag</li>
-          <li>Tag</li>
-          <li>Tag</li>
-          <li>Tag</li>
-          <li>Tag</li>
-          <li>Tag</li>
-          <li>Tag</li>
-        </ul><hr /></div> : null}
+        })}
+        {!this.props.selectedCompany ? 
+        <div>
+          {this.props.companies.map((company, i) => {
+            return <ul key={`${i}`}>
+              <a href="" onClick={(e) => {
+                e.preventDefault();
+                this.props.selectedCompany
+              }}><h2>{company.name}</h2></a>
+              <ul><li>{company.keywords.industry}</li></ul>
+              <ul><li>{company.keywords.technical}</li></ul>
+            </ul>
+          })}
+        <hr /></div> : 
+        <CompanyCard selectedCompany={this.state.selectedCompany} />}
       </div>
     )
   }
 }
 
-export default CompanyList;
+const mapStateToProps = (state) => {
+	return {
+		// spread operator for our props object
+		...state,
+    companies: state.companies.companies,
+    selectedCompany: state.companies.selectedCompany
+	};
+};
+
+const mapDispatchToProps = {
+	getCompanies
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CompanyList);
