@@ -7,7 +7,7 @@ import { checkApiServer } from '../api';
 // REDUX CONNECT
 import { connect } from 'react-redux';
 // REDUX ACTIONS
-import { getCompanies } from '../actions/actionCreators';
+import { getCompanies, handleSingleCompany } from '../actions/actionCreators';
 import CompanyCard from './CompanyCard';
 // import {faListUl, faTag} from '@fortawesome/free-solid-svg-icons';
 
@@ -25,19 +25,13 @@ class CompanyList extends Component {
   render() {
     return (
       <div>
-        {this.props.companies.map((company) => {
-          return <Switch>
-          {/* <Route path={`/companies/:${company.id}`} component={CompanyCard} /> */}
-          <Route path={'/companies/:id'} component={CompanyCard} />
-        </Switch>
-        })}
         {!this.props.selectedCompany ? 
         <div>
           {this.props.companies.map((company, i) => {
             return <ul key={`${i}`}>
               <a href="" onClick={(e) => {
                 e.preventDefault();
-                this.props.selectedCompany
+                handleSingleCompany
               }}><h2>{company.name}</h2></a>
               <ul><li>{company.keywords.industry}</li></ul>
               <ul><li>{company.keywords.technical}</li></ul>
@@ -60,7 +54,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-	getCompanies
+  getCompanies,
+  handleSingleCompany
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CompanyList);
