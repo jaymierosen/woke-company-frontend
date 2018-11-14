@@ -1,6 +1,4 @@
 import React from 'react';
-// import { reduxForm, Field } from "redux-form";
-// import listitem from './checklistitems.json';
 
 export const CheckboxGroup = ({ label, required, name, options,  input, meta}) => (
 	  <ul className="checkbox">

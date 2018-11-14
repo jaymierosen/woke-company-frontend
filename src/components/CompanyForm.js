@@ -45,7 +45,6 @@ const CompanyForm = (props) => {
 					]}
 					warn={alphaNumeric}
 				/>
-				{/* passing in props to the MainDatePicker component */}
 				<Field
 					name='datePicker'
 					type='text'
@@ -57,18 +56,14 @@ const CompanyForm = (props) => {
 
 				<div>
 					<h3 className="block text-grey-darker text-sm font-bold mb-2">Company Checklist</h3>
-					{/* {checklist.map((key, i) => ( */}
 						<Field
 							label="Company Check List"
 							name="requirements"
-							// type="checkbox"
 							options={checklist.map((item) => {
-								return { name: item.id, label: item.requirement, points: 2 }
+								return { name: item.id, label: item.requirement, points: 1 }
 							})}
-							// value={key.requirement}
 							component={CheckboxGroup}
 						/>
-					{/* ))} */}
 				</div>
 
 				<Field name='techDropdown' component={TechStackDropdown} />
