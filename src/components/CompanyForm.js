@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 // REDUX FORM
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm, Field } from "redux-form";
 // COMPONENTS
 import MainDatePicker from './MainDatePicker';
 import { CheckboxGroup } from "./CheckListItem";
@@ -9,22 +9,26 @@ import TextInput from './TextInput';
 import TechStackDropdown from './TechStackDropdown';
 import IndustryDropdown from './IndustryDropdown';
 
-const required = (value) => (value || typeof value === 'number' ? undefined : 'Required');
+const required = value =>
+  value || typeof value === "number" ? undefined : "Required";
 
-const alphaNumeric = (value) => (value && /[^a-zA-Z0-9 ]/i.test(value) ? 'Only alphanumeric characters' : undefined);
+const alphaNumeric = value =>
+  value && /[^a-zA-Z0-9 ]/i.test(value)
+    ? "Only alphanumeric characters"
+    : undefined;
 
-export const minLength = (min) => (value) =>
-	value && value.length < min ? `Must be ${min} characters or more` : undefined;
+export const minLength = min => value =>
+  value && value.length < min ? `Must be ${min} characters or more` : undefined;
 
 export const minLength2 = minLength(2);
 
 const CalenderWrapper = ({ input, ...custom }) => (
-	<MainDatePicker
-		handleChangeDatePicker={(momentDate) => {
-			input.onChange(momentDate.toISOString());
-		}}
-		{...custom}
-	/>
+  <MainDatePicker
+    handleChangeDatePicker={momentDate => {
+      input.onChange(momentDate.toISOString());
+    }}
+    {...custom}
+  />
 );
 
 const CompanyForm = (props) => {
@@ -66,17 +70,29 @@ const CompanyForm = (props) => {
 						/>
 				</div>
 
-				<Field name='techDropdown' component={TechStackDropdown} />
-				<Field name='industryDropdown' component={IndustryDropdown} />
+        <Field
+          name="techDropdown"
+          component={TechStackDropdown}
+          keywords={keywords}
+        />
+        <Field
+          name="industryDropdown"
+          component={IndustryDropdown}
+          keywords={keywords}
+        />
 
-				<button className="bg-grey hover:bg-grey-dark text-white font-bold py-2 px-4 my-3 rounded focus:outline-none focus:shadow-outline" type="submit" disabled={submitting}>
-					Submit
-				</button>
-			</form>
-		</div>
-	);
+        <button
+          className="bg-grey hover:bg-grey-dark text-white font-bold py-2 px-4 my-3 rounded focus:outline-none focus:shadow-outline"
+          type="submit"
+          disabled={submitting}
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  );
 };
 
 export default reduxForm({
-	form: 'companyInfo' // a unique identifier for this form
+  form: "companyInfo" // a unique identifier for this form
 })(CompanyForm);
