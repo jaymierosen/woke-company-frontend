@@ -3,8 +3,9 @@ import React from 'react';
 import { reduxForm, Field } from 'redux-form';
 // COMPONENTS
 import MainDatePicker from './MainDatePicker';
+import { CheckboxGroup } from "./CheckListItem";
 import TextInput from './TextInput';
-import CheckListItem from './CheckListItem';
+// import CheckListItem from './CheckListItem';
 import TechStackDropdown from './TechStackDropdown';
 import IndustryDropdown from './IndustryDropdown';
 
@@ -56,18 +57,18 @@ const CompanyForm = (props) => {
 
 				<div>
 					<h3 className="block text-grey-darker text-sm font-bold mb-2">Company Checklist</h3>
-					{checklist.map((key, i) => (
+					{/* {checklist.map((key, i) => ( */}
 						<Field
-							className='p-1 '
-							name="checklist"
-							id={i}
-							key={i}
-							type='checkbox'
-							component={CheckListItem}
-							label='Company Check List'
-							text={key.requirement}
+							label="Company Check List"
+							name="requirements"
+							// type="checkbox"
+							options={checklist.map((item) => {
+								return { name: item.id, label: item.requirement, points: 2 }
+							})}
+							// value={key.requirement}
+							component={CheckboxGroup}
 						/>
-					))}
+					{/* ))} */}
 				</div>
 
 				<Field name='techDropdown' component={TechStackDropdown} />
