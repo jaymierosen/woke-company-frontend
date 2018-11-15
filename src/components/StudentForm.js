@@ -40,7 +40,7 @@ const StudentForm = props => {
     keywords
   } = props;
   return (
-    <div className="">
+    <div>
       <h2 className="text-lg text-bridge-dark-blue px-6 py-4">Student Form</h2>
       <form className="px-6 py-4" onSubmit={handleSubmit}>
         <Field

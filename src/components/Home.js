@@ -23,8 +23,8 @@ class Home extends Component {
     this.props.getKeywords();
   }
   submit = values => {
-    // print the form values to the console
-    console.log(values);
+    console.log(values.companyName, values.datePicker, values.requirements, values.language.value, values.industryDropdown.value);
+    alert("Your form has been submitted!");
   };
   render() {
     console.log("keywords ", this.props.keywords);

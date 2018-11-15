@@ -1,9 +1,9 @@
 import React from 'react';
 
 export const CheckboxGroup = ({ label, options, input}) => (
-	<ul className="">
+	<ul className="list-reset">
 	  { options.map((option, i) => (
-		<li key={i} className="">
+		<li key={i}>
 			<input type="checkbox"
 				   name={`checkbox-${i}`}
 				   value={option.name}
@@ -18,7 +18,7 @@ export const CheckboxGroup = ({ label, options, input}) => (
 
 					 return input.onChange(newValue);
 				   }}/>
-			<label className="" htmlFor={label}>{option.label}</label>
+			<label className="ml-2" htmlFor={label}>{option.label}</label>
 		  </li>
 		))
 	  }
