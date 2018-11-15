@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-// import CompanyCard from './CompanyCard';
-// import { NavLink } from 'react-router-dom'; 
+import { NavLink } from 'react-router-dom'; 
 import PropTypes from "prop-types";
 import { Route, Switch } from 'react-router-dom';
 import { checkApiServer } from '../api';
@@ -8,6 +7,7 @@ import { checkApiServer } from '../api';
 import { connect } from 'react-redux';
 // REDUX ACTIONS
 import { getCompanies, showCertifiedCompanies, showAllCompanies } from '../actions/actionCreators';
+// COMPONENTS
 import CompanyCard from './CompanyCard';
 import CertifiedButton from './CertifiedButton';
 
@@ -30,7 +30,7 @@ class CompanyList extends Component {
       if (!keywordTypes.hasOwnProperty(i)) continue;
       let keywordType = keywordTypes[i];
       keywordTypeList.push(
-        <div className="text-grey-darker text-base mb-2">
+        <div key={i} className="text-grey-darker text-base mb-2">
           <span className="uppercase text-sm font-bold">{i}:</span> {keywordType.join(', ')}
         </div>
       )
@@ -45,12 +45,10 @@ class CompanyList extends Component {
       if (!companies.hasOwnProperty(i)) continue;
       let company = companies[i];
       companyList.push(
-        <a href="/" className="no-underline">
         <div className="mx-auto max-w-sm rounded overflow-hidden shadow-md px-6 py-4 mb-5" key={`company-${i}`}>
-          <h2 className="font-bold text-xl mb-2 no-underline text-bridge-dark-blue">{company.name}</h2>
+          <NavLink to="/companies/:companyId"><h2 className="font-bold text-xl mb-2 no-underline text-bridge-dark-blue">{company.name}</h2></NavLink>
           {this.createKeywordTypeList(company.keywords)}
         </div>
-        </a>
       )
     }
     return companyList;
@@ -62,7 +60,7 @@ class CompanyList extends Component {
           <Route path={'/companies/:id'} component={CompanyCard} />
         </Switch>
 
-        <div>
+        <div className="mx-auto max-w-sm py-4">
           {' '}
           <CertifiedButton handleClick={this.props.showCertifiedCompanies}>
             Certified Companies
